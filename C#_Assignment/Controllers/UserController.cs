@@ -1,6 +1,7 @@
 ﻿using C__Assignment.Model;
 using C__Assignment.Services;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 
 namespace C__Assignment.Controllers
 {
@@ -17,31 +18,31 @@ namespace C__Assignment.Controllers
             NoRndUser = new NoRndUser();
         }
         [HttpGet]
-        public string GetUsersData()//Couldn't 
+        public string[] GetUsersData(string gender)//Couldn't pull the data is pulling with nulls :( 
         {
-            for (int i = 0;i < 10; i++)
+            string[] users = new string[10];
+            for (int i = 0;i < users.Length; i++)
             {
-
+                users[i] = UserService.GetUser().ToString();
             }
-            string user = UserService.GetUser().ToString();
-            return user;
+            return users;
         }
 
-        //[HttpGet]
-        //public string[] GetMostPopularCountry()
-        //{
-
-        //}
-        //[HttpGet]
-        //public string[] GetListOfMails()
-        //{
-
-        //}
-        //[HttpGet]
-        //public string[] GetTheOldestUser()
-        //{
-
-        //}
+        [HttpGet]
+        public string GetMostPopularCountry()
+        {
+            return "Most Popular Country";
+        }
+        [HttpGet]
+        public List<string> GetListOfMails()
+        {
+            return new List<string>();
+        }
+        [HttpGet]
+        public string[] GetTheOldestUser()
+        {
+            return new string[]{ "name","age"};
+        }
 
         //Part 2 
         //Please note the service class in the second excercise is not that relevant but in big projects no logic should pass
@@ -61,7 +62,7 @@ namespace C__Assignment.Controllers
         public NoRndUser GetNewUser([FromQuery] string id)
         {
             if (id == null || NoRndUser == null || id != NoRndUser.Id)
-                return null;
+                return null!;
 
             return NoRndUser;
         }
